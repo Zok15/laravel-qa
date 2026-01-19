@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\QuestionController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -23,5 +24,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+
+Route::get('/questions/create', [QuestionController::class, 'create'])
+    ->name('questions.create');
+
+Route::get('/questions/{question:slug}', [QuestionController::class, 'show'])
+    ->name('questions.show');
 
 require __DIR__.'/auth.php';
